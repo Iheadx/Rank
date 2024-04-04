@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>河南农业大学团体程序设计天梯赛榜单</title>
+    <script src="{{ url_for('static', filename='js/jquery-3.6.0.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <style>
+        body {
+            padding: 20px;
+        }
+        /* 添加对特定列的强调样式 */
+        .emphasis {
+            font-weight: bolder;
+            color: #FF0000; /* 红色文本，可以根据需要调整颜色 */
+        }
+        .L1 {
+            font-weight: bold;
+            color: #2f712f; /* 红色文本，可以根据需要调整颜色 */
+        }
+        .L2 {
+            font-weight: bold;
+            color: #325b98; /* 红色文本，可以根据需要调整颜色 */
+        }
+        .L3 {
+            font-weight: bold;
+            color: #75199f; /* 红色文本，可以根据需要调整颜色 */
+        }
+        
+        .custom-modal-dialog {
+            max-width: 90%; /* 最大宽度 */
+            width: 90%; /* 实际宽度 */
+        }
+
+    </style>
+    <script>
+        $(document).ready(function() {
+            var currentTableType = localStorage.getItem('currentTableType') || 'table1'; // 默认当前表格类型为table1
+
+            loadTable(currentTableType);
+
+            // 为按钮添加点击事件
+            $('#btnTable1').click(function() {
+                currentTableType = 'table1'; // 设置当前表格类型为table1
+                localStorage.setItem('currentTableType', currentTableType);
+                loadTable(currentTableType);
+            });
+            $('#btnTable2').click(function() {
+                currentTableType = 'table2'; // 设置当前表格类型为table2
+                localStorage.setItem('currentTableType', currentTableType);
+                loadTable(currentTableType);
+            });
+            $('#btnTable3').click(function() {
+                currentTableType = 'table3'; // 设置当前表格类型为table3
+                localStorage.setItem('currentTableType', currentTableType);
+                loadTable(currentTableType);
+            });
+
+            // 定时器，每隔一段时间更新表格数据
+            setInterval(function() {
+                loadTable(currentTableType); // 使用当前表格类型刷新数据
+            }, 5000); // 5000毫秒（5秒）更新一次
+
+            // 表格行点击事件
+            $(document).on('click', '#table-body tr', function() {
+                // 如果当前显示的页面是 table2 或 table3，则弹出团队详情窗口
+                if (currentTableType === 'table2' || currentTableType === 'table3') {
+                    var team_id = $(this).find('td:eq(1)').text(); // 获取团队id
+                    var teamName = $(this).find('td:eq(2)').text(); // 获取团队名称
+                    openTeamDetails(team_id,teamName); // 打开团队详情窗口
+                }
+            });
+        });
+
+        function loadTable(tableType) {
+            if (tableType === 'table1') {
+                loadTable1('/table1');
+            } else if (tableType === 'table2') {
+                loadTable2('/table2');
+            } else if (tableType === 'table3') {
+                loadTable2('/table3');
+            }
+        }
+
+        function loadTable1(url) {
+            $.getJSON(url, function(data) {
+                const tableBody = $('#table-body');
+                const tableHead = $('#table-head');
+                tableBody.empty(); // 清空当前表格内容
+                tableHead.empty(); // 清空当前表头内容
+                // 添加表头
+                tableHead.append('<tr><th>rank</th><th>id</th><th>name</th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th><th>H</th><th class="emphasis">L1</th><th>I</th><th>J</th><th>K</th><th>L</th><th class="emphasis">L2</th><th>M</th><th>N</th><th>O</th><th class="emphasis">L3</th><th class="emphasis">score</th></tr>');
+                // 添加表格数据
+                $.each(data, function(index, row) {
+                    const tr = $('<tr></tr>');
+                    tr.append($('<td></td>').text(row.rank));
+                    tr.append($('<td></td>').text(row.id));
+                    tr.append($('<td></td>').text(row.name));
+                    tr.append($('<td class="L1"></td>').text(row.A));
+                    tr.append($('<td class="L1"></td>').text(row.B));
+                    tr.append($('<td class="L1"></td>').text(row.C));
+                    tr.append($('<td class="L1"></td>').text(row.D));
+                    tr.append($('<td class="L1"></td>').text(row.E));
+                    tr.append($('<td class="L1"></td>').text(row.F));
+                    tr.append($('<td class="L1"></td>').text(row.G));
+                    tr.append($('<td class="L1"></td>').text(row.H));
+                    tr.append($('<td class="emphasis"></td>').text(row.L1));
+                    tr.append($('<td class="L2"></td>').text(row.I));
+                    tr.append($('<td class="L2"></td>').text(row.J));
+                    tr.append($('<td class="L2"></td>').text(row.K));
+                    tr.append($('<td class="L2"></td>').text(row.L));
+                    tr.append($('<td class="emphasis"></td>').text(row.L2));
+                    tr.append($('<td class="L3"></td>').text(row.M));
+                    tr.append($('<td class="L3"></td>').text(row.N));
+                    tr.append($('<td class="L3"></td>').text(row.O));
+                    tr.append($('<td class="emphasis"></td>').text(row.L3));
+                    tr.append($('<td class="emphasis"></td>').text(row.score));
+                    tableBody.append(tr);
+                });
+            });
+        }
+
+        function loadTable2(url) {
+            $.getJSON(url, function(data) {
+                const tableBody = $('#table-body');
+                const tableHead = $('#table-head');
+                tableBody.empty(); // 清空当前表格内容
+                tableHead.empty(); // 清空当前表头内容
+                // 添加表头
+                tableHead.append('<tr><th>rank</th><th>team_id</th><th>team name</th><th>L1</th><th>L2</th><th>L3</th><th>score</th></tr>');
+                // 添加表格数据
+                $.each(data, function(index, row) {
+                    const tr = $('<tr></tr>');
+                    tr.append($('<td></td>').text(row.rank));
+                    tr.append($('<td></td>').text(row.team_id));
+                    tr.append($('<td></td>').text(row.name));
+                    tr.append($('<td></td>').text(row.L123[0]));
+                    tr.append($('<td></td>').text(row.L123[1]));
+                    tr.append($('<td></td>').text(row.L123[2]));
+                    tr.append($('<td></td>').text(row.score));
+                    tableBody.append(tr);
+                });
+            });
+        }
+
+        // 打开团队详情窗口
+        function openTeamDetails(teamID,teamName) {
+            // 发送 Ajax 请求获取团队详情数据
+            $.getJSON('/team_details', { team_id: teamID }, function(teamDetails) {
+                // 清空表格内容
+                $('#teamDetailsBody').empty();
+
+                // 添加大标题
+                var modalTitle = $('<h5 class="modal-title"></h5>').text('团队详情 - ' + teamName);
+                $('.modal-header').html(modalTitle); // 替换原有的模态框标题
+
+                // 填充表格内容
+                $.each(teamDetails, function(index, row) {
+                    var tr = $('<tr></tr>');
+                    tr.append($('<td></td>').text(row.id));
+                    tr.append($('<td></td>').text(row.name));
+                    tr.append($('<td class="L1"></td>').text(row.A));
+                    tr.append($('<td class="L1"></td>').text(row.B));
+                    tr.append($('<td class="L1"></td>').text(row.C));
+                    tr.append($('<td class="L1"></td>').text(row.D));
+                    tr.append($('<td class="L1"></td>').text(row.E));
+                    tr.append($('<td class="L1"></td>').text(row.F));
+                    tr.append($('<td class="L1"></td>').text(row.G));
+                    tr.append($('<td class="L1"></td>').text(row.H));
+                    tr.append($('<td class="emphasis"></td>').text(row.L1));
+                    tr.append($('<td class="L2"></td>').text(row.I));
+                    tr.append($('<td class="L2"></td>').text(row.J));
+                    tr.append($('<td class="L2"></td>').text(row.K));
+                    tr.append($('<td class="L2"></td>').text(row.L));
+                    tr.append($('<td class="emphasis"></td>').text(row.L2));
+                    tr.append($('<td class="L3"></td>').text(row.M));
+                    tr.append($('<td class="L3"></td>').text(row.N));
+                    tr.append($('<td class="L3"></td>').text(row.O));
+                    tr.append($('<td class="emphasis"></td>').text(row.L3));
+                    tr.append($('<td class="emphasis"></td>').text(row.score));
+                    $('#teamDetailsBody').append(tr);
+                });
+
+                // 显示模态框
+                // 显示模态框并设置弹窗大小
+                
+                $('#teamDetailsModal').find('.modal-dialog').removeClass('modal-sm').addClass('custom-modal-dialog'); // 修改弹窗大小
+
+                $('#teamDetailsModal').modal('show');
+            });
+        }
+
+    </script>
+</head>
+<body>
+    <h2 style="text-align: center;">河南农业大学团体程序设计天梯赛榜单</h2>
+    <!-- <div class="empty-line"></div> -->
+    <br>
+    <div style="text-align: center;">
+        <button id="btnTable1" class="btn btn-primary">个人榜单</button>
+        <button id="btnTable2" class="btn btn-primary">团队*华山论剑</button>
+        <button id="btnTable3" class="btn btn-primary">团队*珠峰争鼎</button>
+    </div>
+    <br>
+    <div class="empty-line"></div>
+    <table class="table table-striped">
+        <thead id="table-head">
+        </thead>
+        <tbody id="table-body">
+            <!-- 表格数据将通过JavaScript动态插入 -->
+        </tbody>
+    </table>
+    <!-- 弹出窗口的 HTML 结构 -->
+    <div id="teamDetailsModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">团队详情</h5> <!-- 标题 -->
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped"> <!-- 表格 -->
+                        <thead>
+                            <tr>
+                                <th>id</th><th>name</th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th><th>H</th><th class="emphasis">L1</th><th>I</th><th>J</th><th>K</th><th>L</th><th class="emphasis">L2</th><th>M</th><th>N</th><th>O</th><th class="emphasis">L3</th><th class="emphasis">score</th></tr>
+                            </tr>
+                        </thead>
+                        <tbody id="teamDetailsBody">
+                            <!-- 表格数据将通过 JavaScript 动态插入 -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+

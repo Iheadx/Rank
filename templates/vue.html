@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title >河南农业大学团体程序设计天梯赛榜单</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            padding: 20px;
+        }
+        /* 添加对特定列的强调样式 */
+        .emphasis {
+            font-weight: bold;
+            color: #FF0000; /* 红色文本，可以根据需要调整颜色 */
+        }
+    </style>
+    <script>
+        $(document).ready(function() {
+            var currentTableType = localStorage.getItem('currentTableType') || 'table1'; // 默认当前表格类型为table1
+
+            loadTable(currentTableType);
+
+            // 为按钮添加点击事件
+            $('#btnTable1').click(function() {
+                currentTableType = 'table1'; // 设置当前表格类型为table1
+                localStorage.setItem('currentTableType', currentTableType);
+                loadTable(currentTableType);
+            });
+            $('#btnTable2').click(function() {
+                currentTableType = 'table2'; // 设置当前表格类型为table2
+                localStorage.setItem('currentTableType', currentTableType);
+                loadTable(currentTableType);
+            });
+            $('#btnTable3').click(function() {
+                currentTableType = 'table3'; // 设置当前表格类型为table3
+                localStorage.setItem('currentTableType', currentTableType);
+                loadTable(currentTableType);
+            });
+
+            // 定时器，每隔一段时间更新表格数据
+            setInterval(function() {
+                loadTable(currentTableType); // 使用当前表格类型刷新数据
+            }, 5000); // 5000毫秒（5秒）更新一次
+        });
+
+        function loadTable(tableType) {
+            if (tableType === 'table1') {
+                loadTable1('/table1');
+            } else if (tableType === 'table2') {
+                loadTable2('/table2');
+            } else if (tableType === 'table3') {
+                loadTable2('/table3');
+            }
+        }
+
+        function loadTable1(url) {
+            $.getJSON(url, function(data) {
+                const tableBody = $('#table-body');
+                const tableHead = $('#table-head');
+                tableBody.empty(); // 清空当前表格内容
+                tableHead.empty(); // 清空当前表头内容
+                // 添加表头
+                tableHead.append('<tr><th>rank</th><th>id</th><th>name</th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th><th>H</th><th class="emphasis">L1</th><th>I</th><th>J</th><th>K</th><th>L</th><th class="emphasis">L2</th><th>M</th><th>N</th><th>O</th><th class="emphasis">L3</th><th class="emphasis">score</th></tr>');
+                // 添加表格数据
+                $.each(data, function(index, row) {
+                    const tr = $('<tr></tr>');
+                    tr.append($('<td></td>').text(row.rank));
+                    tr.append($('<td></td>').text(row.id));
+                    tr.append($('<td></td>').text(row.name));
+                    tr.append($('<td></td>').text(row.A));
+                    tr.append($('<td></td>').text(row.B));
+                    tr.append($('<td></td>').text(row.C));
+                    tr.append($('<td></td>').text(row.D));
+                    tr.append($('<td></td>').text(row.E));
+                    tr.append($('<td></td>').text(row.F));
+                    tr.append($('<td></td>').text(row.G));
+                    tr.append($('<td></td>').text(row.H));
+                    tr.append($('<td class="emphasis"></td>').text(row.L1));
+                    tr.append($('<td></td>').text(row.I));
+                    tr.append($('<td></td>').text(row.J));
+                    tr.append($('<td></td>').text(row.K));
+                    tr.append($('<td></td>').text(row.L));
+                    tr.append($('<td class="emphasis"></td>').text(row.L2));
+                    tr.append($('<td></td>').text(row.M));
+                    tr.append($('<td></td>').text(row.N));
+                    tr.append($('<td></td>').text(row.O));
+                    tr.append($('<td class="emphasis"></td>').text(row.L3));
+                    tr.append($('<td class="emphasis"></td>').text(row.score));
+                    tableBody.append(tr);
+                });
+            });
+        }
+
+        function loadTable2(url) {
+            $.getJSON(url, function(data) {
+                const tableBody = $('#table-body');
+                const tableHead = $('#table-head');
+                tableBody.empty(); // 清空当前表格内容
+                tableHead.empty(); // 清空当前表头内容
+                // 添加表头
+                tableHead.append('<tr><th>rank</th><th>team name</th><th>L1</th><th>L2</th><th>L3</th><th>score</th></tr>');
+                // 添加表格数据
+                $.each(data, function(index, row) {
+                    const tr = $('<tr></tr>');
+                    tr.append($('<td></td>').text(row.rank));
+                    // tr.append($('<td></td>').text(row.id));
+                    tr.append($('<td></td>').text(row.name));
+                    tr.append($('<td></td>').text(row.L123[0]));
+                    tr.append($('<td></td>').text(row.L123[1]));
+                    tr.append($('<td></td>').text(row.L123[2]));
+                    tr.append($('<td></td>').text(row.score));
+                    tableBody.append(tr);
+                });
+            });
+        }
+    </script>
+</head>
+<body>
+    <h2 style="text-align: center;">河南农业大学团体程序设计天梯赛榜单</h2>
+    <div class="empty-line"></div>
+    <div style="text-align: center;">
+        <button id="btnTable1" class="btn btn-primary">个人榜单</button>
+        <button id="btnTable2" class="btn btn-primary">团队*华山论剑</button>
+        <button id="btnTable3" class="btn btn-primary">团队*珠峰争鼎</button>
+    </div>
+    <div class="empty-line"></div>
+    <table class="table table-striped">
+        <thead id="table-head">
+        </thead>
+        <tbody id="table-body">
+            <!-- 表格数据将通过JavaScript动态插入 -->
+        </tbody>
+    </table>
+</body>
+</html>
