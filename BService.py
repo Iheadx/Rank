@@ -154,7 +154,7 @@ def classrank():
         for item in tot_list:
             if item['name'] not in bj['team']:continue
             tmp.append(item['score'])
-        print(tmp)
+        # print(tmp)
         res = {'name':bj['name'],'class':bj['class'],'team':tmp,'score':round(sum(tmp),2)}
         ans.append(res)
     ans.sort(key = lambda x:x['score'],reverse=True)
