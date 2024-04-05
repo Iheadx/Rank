@@ -1,0 +1,12 @@
+[
+    {
+        "class":"华山论剑",
+        "name":"class1",
+        "team":["team1","team2","team3"]
+    },
+    {
+        "class":"珠峰争鼎",
+        "name":"class2",
+        "team":["team11","team22","team33"]
+    }
+]

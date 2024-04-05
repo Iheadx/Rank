@@ -25,7 +25,7 @@ class GetRank:
         # 使用BeautifulSoup解析页面源代码
         self.soup = BeautifulSoup(html_source, 'html.parser')
         # 定位目标表格
-        self.table = self.soup.find('table', {'id': 'rank'})  # 替换成实际的表格ID或其他属性
+        self.table = self.soup.find('table', {'id': 'rank'}) 
     def get_user_data(self,row_data):
         # 每题最高分
         tot_list = [5,5,10,10,15,15,20,20,25,25,25,25,30,30,30]
