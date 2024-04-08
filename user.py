@@ -8,7 +8,7 @@ class Player:
     def get_L1(self):
         # 计算从score_list[0]到score_list[7]的和
         L1 = 0
-        for i in range(7):
+        for i in range(8):
             L1 += self.score_list[i] if self.score_list[i]!= -1 else 0
         return L1
     def get_L2(self):

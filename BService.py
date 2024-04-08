@@ -2,7 +2,7 @@ from rank import GetRank
 from user import Player
 import json
 
-rank = GetRank('http://192.168.31.63/contestrank-oi.php?cid=1060')
+rank = GetRank('http://192.168.2.124/contestrank-oi.php?cid=1060')
 with open('team/华山论剑.json','r',encoding='utf-8') as f:
     team_data_hs = json.load(f)
 with open('team\珠峰争鼎.json','r',encoding='utf-8') as f:
@@ -44,9 +44,9 @@ def userrank():
         
         data[i]['name'] = user_list[data[i]['id']]
 
-        if (data[i]['L2'] < 40 or data[i]['L1']< 80) and data[i]['L3']>0:
+        if (data[i]['L2'] < 25 or data[i]['L1']< 50) and data[i]['L3']>0:
             data[i]['L3'] = str(data[i]['L3'])+'🤡'
-        if data[i]['L1'] < 80 and data[i]['L2'] > 0:
+        if data[i]['L1'] < 50 and data[i]['L2'] > 0:
             data[i]['L2'] = str(data[i]['L2'])+'🤡'
         for letter in range(ord('A'),ord('O')+1):
             j = chr(letter)
@@ -86,9 +86,9 @@ def getteamans(teamName):
 
         res = item
         res['name'] = user_list[res['id']]
-        if (res['L2'] < 40 or res['L1']< 80) and res['L3']>0:
+        if (res['L2'] < 25 or res['L1']< 50) and res['L3']>0:
             res['L3'] = str(res['L3'])+'🤡'
-        if res['L1'] < 80 and res['L2'] > 0:
+        if res['L1'] < 50 and res['L2'] > 0:
             res['L2'] = str(res['L2'])+'🤡'
         for letter in range(ord('A'),ord('O')+1):
             j = chr(letter)
@@ -127,10 +127,10 @@ def teamtot():
     ans_list = [value for key,value in ans.items()]
 
     for i in range(len(ans_list)):
-        if ans_list[i]['L123'][2]>0 and (ans_list[i]['L123'][1]<40*8 or ans_list[i]['L123'][0]<80*8):
+        if ans_list[i]['L123'][2]>0 and (ans_list[i]['L123'][1]<25*8 or ans_list[i]['L123'][0]<50*8):
             ans_list[i]['score'] -= ans_list[i]['L123'][2]
             ans_list[i]['L123'][2] = str(ans_list[i]['L123'][2])+'🤡'
-        if ans_list[i]['L123'][1]>0 and ans_list[i]['L123'][0]<80*8:
+        if ans_list[i]['L123'][1]>0 and ans_list[i]['L123'][0]<50*8:
             ans_list[i]['score'] -= ans_list[i]['L123'][1]
             ans_list[i]['L123'][1] = str(ans_list[i]['L123'][1])+'🤡'
     
