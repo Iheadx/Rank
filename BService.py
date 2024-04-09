@@ -2,7 +2,7 @@ from rank import GetRank
 from user import Player
 import json
 
-rank = GetRank('http://192.168.2.124/contestrank-oi.php?cid=1060')
+rank = GetRank('http://192.168.1.107/contestrank-oi.php?cid=1060')
 with open('team/华山论剑.json','r',encoding='utf-8') as f:
     team_data_hs = json.load(f)
 with open('team\珠峰争鼎.json','r',encoding='utf-8') as f:
@@ -155,6 +155,10 @@ def classrank():
             if item['name'] not in bj['team']:continue
             tmp.append(item['score'])
         # print(tmp)
+        if len(tmp)>3:
+            tmp = tmp[:3]
+        while len(tmp)<3:
+            tmp.append(0)
         res = {'name':bj['name'],'class':bj['class'],'team':tmp,'score':round(sum(tmp),2)}
         ans.append(res)
     ans.sort(key = lambda x:x['score'],reverse=True)
