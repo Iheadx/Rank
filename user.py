@@ -10,19 +10,19 @@ class Player:
         L1 = 0
         for i in range(8):
             L1 += self.score_list[i] if self.score_list[i]!= -1 else 0
-        return L1
+        return round(L1,2)
     def get_L2(self):
         # 计算从score_list[8]到score_list[11]的和
         L2 = 0
         for i in range(8,12):
             L2 += self.score_list[i] if self.score_list[i]!= -1 else 0
-        return L2
+        return round(L2,2)
     def get_L3(self):
         # 计算从score_list[12]到score_list[14]的和
         L3 = 0
         for i in range(12,15):
             L3 += self.score_list[i] if self.score_list[i]!= -1 else 0
-        return L3
+        return round(L3,2)
     
     def get_score(self):
         L1 = self.get_L1()
@@ -36,6 +36,6 @@ class Player:
             L3_istrue = True
         
         tot = L1 + L2 * L2_istrue + L3 * L3_istrue
-        return L1,L2,L3,L2_istrue,L3_istrue,tot
+        return L1,L2,L3,L2_istrue,L3_istrue,round(tot,2)
     
     

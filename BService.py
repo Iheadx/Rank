@@ -124,9 +124,9 @@ def teamtot():
     for it in table_data:
         if (it['id'] not in userzf) and (it['id'] not in userhs): continue
 
-        ans[user2team[it['id']]]['L123'][0]+=it['L1']
-        ans[user2team[it['id']]]['L123'][1]+=it['L2'] 
-        ans[user2team[it['id']]]['L123'][2]+=it['L3']
+        ans[user2team[it['id']]]['L123'][0]+=it['L1']; ans[user2team[it['id']]]['L123'][0]=round(ans[user2team[it['id']]]['L123'][0],2)
+        ans[user2team[it['id']]]['L123'][1]+=it['L2']; ans[user2team[it['id']]]['L123'][1]=round(ans[user2team[it['id']]]['L123'][1],2)
+        ans[user2team[it['id']]]['L123'][2]+=it['L3']; ans[user2team[it['id']]]['L123'][2]=round(ans[user2team[it['id']]]['L123'][2],2)
 
     for key,value in ans.items():
         value.update({'score':sum(value['L123'])})
