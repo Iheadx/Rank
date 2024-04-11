@@ -97,8 +97,9 @@
         $(document).on('click', '#table-body tr', function() {
             // 如果当前显示的页面是 table2 或 table3，则弹出团队详情窗口 || currentTableType === 'table3'
             if (currentTableType === 'table2') {
-                var teamName = $(this).find('td:eq(2)').text(); // 获取团队名称
-                openTeamDetails(teamName); // 打开团队详情窗口
+                var teamName = $(this).find('td:eq(3)').text(); // 获取团队名称
+                var className = $(this).find('td:eq(2)').text(); // 获取团队名称
+                openTeamDetails(teamName,className); // 打开团队详情窗口
             }
         });
 
@@ -164,11 +165,12 @@
             tableBody.empty(); // 清空当前表格内容
             tableHead.empty(); // 清空当前表头内容
             // 添加表头
-            tableHead.append('<tr><th>rank</th><th>group</th><th>team name</th><th>L1</th><th>L2</th><th>L3</th><th>score</th></tr>');
+            tableHead.append('<tr><th>rank</th><th>group</th><th>class</th><th>team name</th><th>L1</th><th>L2</th><th>L3</th><th>score</th></tr>');
             // 添加表格数据
             $.each(data, function(index, row) {
                 const tr = $('<tr></tr>');
                 tr.append($('<td></td>').text(row.rank));
+                tr.append($('<td></td>').text(row.group));
                 tr.append($('<td></td>').text(row.class));
                 tr.append($('<td></td>').text(row.name));
                 tr.append($('<td></td>').text(row.L123[0]));
@@ -206,14 +208,14 @@
     }
 
     // 打开团队详情窗口
-    function openTeamDetails(teamName) {
+    function openTeamDetails(teamName,className) {
         // 发送 Ajax 请求获取团队详情数据
         $.getJSON('/team_details', { team_name: teamName }, function(teamDetails) {
             // 清空表格内容
             $('#teamDetailsBody').empty();
 
             // 添加大标题
-            var modalTitle = $('<h5 class="modal-title"></h5>').text('团队详情 - ' + teamName);
+            var modalTitle = $('<h5 class="modal-title"></h5>').text(teamName + ' - '+ className);
             $('.modal-header').html(modalTitle); // 替换原有的模态框标题
 
             // 填充表格内容

@@ -2,7 +2,7 @@ from rank import GetRank
 from user import Player
 import json
 
-rank = GetRank('http://192.168.1.107/contestrank-oi.php?cid=1060')
+rank = GetRank('http://172.23.71.17/contestrank-oi.php?cid=1060')
 with open('team/华山论剑.json','r',encoding='utf-8') as f:
     team_data_hs = json.load(f)
 with open('team\珠峰争鼎.json','r',encoding='utf-8') as f:
@@ -30,10 +30,17 @@ for it in team_data_zf:
         userzf.update({mb['id']:mb['name']})
         user2team.update({mb['id']:it['team_name']})
 
+team2class={}
+for it in class_data:
+    for team in it['team']:
+        team2class.update({team:it['name']})
+
+
 
 
 def userrank():
     data = rank.userRank()
+    print(data)
     tmp_usr = user_list.copy()
     
     table_data = []
@@ -109,10 +116,10 @@ def teamtot():
 
     # 载入所有团队信息
     for key,value in team_hs.items():
-        ans.update({key:{"team_name":key,"name":value['name'],"L123":[0,0,0],"class":"华山论剑"}})
+        ans.update({key:{"team_name":key,"name":value['name'],"L123":[0,0,0],"group":"华山论剑"}})
 
     for key,value in team_zf.items():
-        ans.update({key:{"team_name":key,"name":value['name'],"L123":[0,0,0],"class":"珠峰争鼎"}})
+        ans.update({key:{"team_name":key,"name":value['name'],"L123":[0,0,0],"group":"珠峰争鼎"}})
 
     for it in table_data:
         if (it['id'] not in userzf) and (it['id'] not in userhs): continue
@@ -141,6 +148,7 @@ def teamtot():
         ans_list[i]['rank'] = i+1
         # 防止出现精度损失 保留两位小数
         ans_list[i]['score'] = round(ans_list[i]['score'],2)
+        ans_list[i].update({'class':team2class[ans_list[i]['team_name']]})
     
     return ans_list
 

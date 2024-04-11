@@ -30,9 +30,9 @@ class Player:
         L3 = self.get_L3()
         L2_istrue = False
         L3_istrue = False
-        if L1 >= 80:
+        if L1 >= 50:
             L2_istrue = True
-        if L2 >= 40:
+        if L2 >= 25:
             L3_istrue = True
         
         tot = L1 + L2 * L2_istrue + L3 * L3_istrue
