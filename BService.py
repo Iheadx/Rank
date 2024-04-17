@@ -2,7 +2,7 @@ from rank import GetRank
 from user import Player
 import json
 
-rank = GetRank('http://172.23.71.17/contestrank-oi.php?cid=1063')
+rank = GetRank('http://1.1.1.1/contestrank-oi.php?cid=1063')
 with open('team/华山论剑.json','r',encoding='utf-8') as f:
     team_data_hs = json.load(f)
 with open('team\珠峰争鼎.json','r',encoding='utf-8') as f:
