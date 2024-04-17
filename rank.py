@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from user import Player
 import re
 import time
+import threading
 
 class GetRank:
     def __init__(self,url) -> None:
@@ -12,7 +13,9 @@ class GetRank:
         # 创建一个WebDriver实例，例如ChromeDriver
         self.driver = webdriver.Chrome(options=chrome_options)
         self.url = url
-        # 获取原始数据
+        # 获取原始数据 创建线程每5秒更新数据
+        self.thread = threading.Thread(target=self.update_parameter)
+        self.thread.start()
         self.table = None
         # 处理后的数据
         self.table_data = None
@@ -97,9 +100,15 @@ class GetRank:
         return table_data
     
     def userRank(self):
-        if self.table_data == None or time.time()-self.lasttime > 5:
-            self.getRank()
         return self.list2json(self.table_data)
 
     def close_driver(self):
         self.driver.close()
+    
+    def update_parameter(self):
+        while True:
+            # 执行需要更新的操作
+            self.getRank()
+            
+            # 暂停5秒
+            time.sleep(5)
